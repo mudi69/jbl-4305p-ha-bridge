@@ -1,0 +1,71 @@
+{
+  "review_date": "2026-10-17",
+  "scope": "Read-only source/documentation review; no HA changes, device access, installation, build or firmware test",
+  "known_environment": {
+    "esphome_version": "2026.9.1",
+    "builder_present": true,
+    "esp32_model": "not yet identified",
+    "verified_buttons": 12,
+    "report_map_bytes": 79,
+    "report_reference_handle_bindings": "not yet captured"
+  },
+  "recommendation": {
+    "first_prototype": "ESPHome native API with a version-pinned local override of esp32_ble_server",
+    "reason": "Existing Builder and native HA buttons can be reused. Core GATT configuration and notification actions already exist, but stock 2026.9.1 needs targeted fixes for duplicate report UUIDs and security callbacks.",
+    "fallback": "Arduino + NimBLE-Arduino 2.5.1 HID server + MQTT buttons if ESPHome reconnect/subscription handling becomes a substantial custom implementation",
+    "reliability_status": "Neither route has been tested against this speaker; no success guarantee"
+  },
+  "esphome": {
+    "yaml_supported": [
+      "custom HID service 0x1812",
+      "79-byte Report Map 0x2A4B including long reads",
+      "Report Reference 0x2908 byte values",
+      "CCCD creation",
+      "set_value and notify",
+      "template buttons via native API",
+      "NoInputNoOutput and bond/sc_bond security parameters"
+    ],
+    "duplicate_uuid_fix": "ADD_CHAR_EVT must match current CREATING instance, non-null service, event service_handle, last_created_characteristic and UUID; handle failure status. A last_created-only condition is insufficient.",
+    "security_gap": "Register GAP security callback; respond to SEC_REQ, initiate encryption where required, track authentication outcome and gate report notification.",
+    "security_change_estimate": "60-100 lines before implementation/compilation, excluding CCCD persistence",
+    "local_override": "Copy the pinned component's 13 files; initially modify __init__.py, ble_server.h, ble_server.cpp and ble_characteristic.cpp. Scope override only to the new device YAML.",
+    "cccd_gap": "Notification subscribers are stored in RAM by connection ID; ordinary disconnect does not clear them, while service deletion/reboot loses them. Clear stale connection entries and verify whether JBL re-subscribes after reconnect. If not, restore CCCD state by bonded identity.",
+    "permission_gap": "Stock characteristic permissions are READ|WRITE without a public setter; encrypted attribute permissions require another small interface/schema extension if exact permission fidelity is needed.",
+    "sources_removed_personal_paths": true
+  },
+  "nimble": {
+    "reference_version": "2.5.1",
+    "hid_capabilities": [
+      "setReportMap accepts the original byte array",
+      "getInputReport creates separate 0x2A4D characteristics by report ID",
+      "0x2908 is populated as [report_id, 1]",
+      "input reports and references use READ_ENC",
+      "notify can send an explicit pointer and byte length"
+    ],
+    "security": "Explicitly enable bonding after init; configure NoInputNoOutput and SC support according to pairing evidence. Do not inherit the default bonding=false configuration.",
+    "ha_transport": "MQTT button command topics and availability are simpler than implementing the ESPHome native API protocol inside standalone Arduino firmware. Use non-retained commands and explicit press/release scheduling."
+  },
+  "implementation_gates": [
+    "Identify the ESP32 board and confirm Wi-Fi plus BLE support before selecting build target.",
+    "Capture Report Reference descriptors before treating original ATT handles as report IDs.",
+    "Preserve measured 8-byte and 2-byte notification payloads; do not silently pad the 2-byte stream to the Report Map's four bytes.",
+    "Use the emulator's own BLE address and pair it through the speaker's normal pairing procedure; do not assume copied MAC or original bond keys are needed.",
+    "Verify initial pairing, one input switch, one volume action, release behavior, speaker reconnect and ESP power-cycle bond recovery before expanding the complete button set."
+  ],
+  "sources": [
+    "https://esphome.io/components/esp32_ble_server/",
+    "https://github.com/esphome/esphome/blob/2026.9.1/esphome/components/esp32_ble_server/__init__.py",
+    "https://github.com/esphome/esphome/blob/2026.9.1/esphome/components/esp32_ble_server/ble_characteristic.cpp",
+    "https://github.com/esphome/esphome/blob/2026.9.1/esphome/components/esp32_ble_server/ble_service.cpp",
+    "https://github.com/esphome/esphome/blob/2026.9.1/esphome/components/esp32_ble_server/ble_server.cpp",
+    "https://github.com/esphome/esphome/blob/2026.9.1/esphome/components/esp32_ble/ble.cpp",
+    "https://esphome.io/components/external_components/",
+    "https://esphome.io/components/button/template/",
+    "https://github.com/espressif/esp-idf/blob/v5.5.1/examples/bluetooth/bluedroid/ble/gatt_security_server/main/example_ble_sec_gatts_demo.c",
+    "https://github.com/h2zero/NimBLE-Arduino/blob/2.5.1/src/NimBLEHIDDevice.cpp",
+    "https://github.com/h2zero/NimBLE-Arduino/blob/2.5.1/src/NimBLEDevice.cpp",
+    "https://github.com/h2zero/NimBLE-Arduino/blob/2.5.1/src/NimBLECharacteristic.cpp",
+    "https://www.home-assistant.io/integrations/button.mqtt/"
+  ],
+  "archive_status": "SUPERSEDED HISTORICAL PROTOTYPE COMPARISON. Do not deploy from this file; see README and docs/DEPLOYMENT.md."
+}

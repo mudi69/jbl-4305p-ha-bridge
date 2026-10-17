@@ -1,0 +1,137 @@
+{
+  "upstream": "https://github.com/esphome/esphome",
+  "tag": "2026.9.1",
+  "commit": "0b2b16e664ecfc0add37f3435db1c2140b8a687e",
+  "component": "esphome/components/esp32_ble_server",
+  "files": {
+    "__init__.py": {
+      "upstream_git_blob": "d8095cd7020fd9b303e89757c9d3f842764566f9",
+      "upstream_sha256": "642b20e9dfa772dcf5a7b580d2a3e71724de1cdd6320c85a7e08b6b132cb7dc4",
+      "local_sha256": "1e36da901311ff995e1e557bb049dc330d056649168c4b2adead43e5287455fe"
+    },
+    "ble_2902.cpp": {
+      "upstream_git_blob": "90d0871a967d38ec4d47576b761a6625c57d2c10",
+      "upstream_sha256": "288575dd1397c1c5e0343c2e740d4b1e19b7b9c3af4776b34b61671df7d515b1",
+      "local_sha256": "288575dd1397c1c5e0343c2e740d4b1e19b7b9c3af4776b34b61671df7d515b1"
+    },
+    "ble_2902.h": {
+      "upstream_git_blob": "46a5f73e9ed971492fce8ea4fc523d20de4eab37",
+      "upstream_sha256": "77b5657c029e77983837276c1d63a7af16b3539a65e53acd5232ae2a407abde3",
+      "local_sha256": "77b5657c029e77983837276c1d63a7af16b3539a65e53acd5232ae2a407abde3"
+    },
+    "ble_characteristic.cpp": {
+      "upstream_git_blob": "4d364b46556e43b6862a074ee3cc2787333141af",
+      "upstream_sha256": "12fb3314d0a2c15bed14b85a3f644903304c4b8ee7d80ffb7cfd4d0662468700",
+      "local_sha256": "a85aa1c7e93bcd3b90c6c9c84a6775c7d05a9296853e75f336f728fd6b23628f"
+    },
+    "ble_characteristic.h": {
+      "upstream_git_blob": "b7a3fae1a5b0ff68414723d74a6bb48238e70a3a",
+      "upstream_sha256": "c78ecabf6926e2c6e0e20e7f62697414c11d4081e37672dd55f7ca5c7a35a785",
+      "local_sha256": "b177f8d040bbe0bac99dd8eb100090a374d7888b52f444841b86af84be1553bd"
+    },
+    "ble_descriptor.cpp": {
+      "upstream_git_blob": "3dcac3691c2ea9157faa93d74171aab4b07d9737",
+      "upstream_sha256": "019406616acb582191873e4af92aa732732dbf179bf957b0ac56fc0722b81d1c",
+      "local_sha256": "019406616acb582191873e4af92aa732732dbf179bf957b0ac56fc0722b81d1c"
+    },
+    "ble_descriptor.h": {
+      "upstream_git_blob": "5096d39f284177ff421223cacc14bf763ea73bab",
+      "upstream_sha256": "84acc9d0d6614daaa2b86dc22cf3b6aa3f0923c28dea054f744b63d1e0538297",
+      "local_sha256": "84acc9d0d6614daaa2b86dc22cf3b6aa3f0923c28dea054f744b63d1e0538297"
+    },
+    "ble_server.cpp": {
+      "upstream_git_blob": "45679b9b982102f45c123240c4620cd7366861ad",
+      "upstream_sha256": "2a7e7c682a3f15e03c1d215e0fd0ac2241a4d6670c07f2fbf71358ef520a524a",
+      "local_sha256": "cd9a4a8b770ab8a3b69d5a8e3a0caf7f65feab1e020ba997f8c7a48d480fce5b"
+    },
+    "ble_server.h": {
+      "upstream_git_blob": "7869c73cc5360f59ad94da4b9f9368dbef3cb82d",
+      "upstream_sha256": "dfa300eeb610441ea88c5c98aebc8bc298a7b7ad273401e806e0e8b3a0112068",
+      "local_sha256": "a87a83a13fab452d5ffa41ea1c20ea58ecf246dc39b4e426ee62b5b5228b63b8"
+    },
+    "ble_server_automations.cpp": {
+      "upstream_git_blob": "1b15c90fe8c9f953b83acf867187a37adb749f4a",
+      "upstream_sha256": "86289b6a883f77aefc6d873de83dfd274fedb95d86e2cef7d64c2791b598dd9d",
+      "local_sha256": "86289b6a883f77aefc6d873de83dfd274fedb95d86e2cef7d64c2791b598dd9d"
+    },
+    "ble_server_automations.h": {
+      "upstream_git_blob": "e5463847fa85aeacb91c2a723156aedf96f69f1f",
+      "upstream_sha256": "d75711ede05e552a87729d40193e882fe45dfbead4b338fa568840f47c6b5be5",
+      "local_sha256": "d75711ede05e552a87729d40193e882fe45dfbead4b338fa568840f47c6b5be5"
+    },
+    "ble_service.cpp": {
+      "upstream_git_blob": "ac8d7fa003c47cba76d1ac37b497abe3522eed0e",
+      "upstream_sha256": "4053cbcb92c5414eacffeb9de645bd9ff23581b3b6bfb8b4f431fe8d5d0241db",
+      "local_sha256": "4053cbcb92c5414eacffeb9de645bd9ff23581b3b6bfb8b4f431fe8d5d0241db"
+    },
+    "ble_service.h": {
+      "upstream_git_blob": "a0592d0a80972322c02c1a37377660bf6588daa6",
+      "upstream_sha256": "11b99aa2994eeef29b60d256877d939fa8a14ddc8dcab769fcc1d43c1133b58a",
+      "local_sha256": "11b99aa2994eeef29b60d256877d939fa8a14ddc8dcab769fcc1d43c1133b58a"
+    }
+  },
+  "changes": [
+    "Match ADD_CHAR callbacks by CREATING state, owning service, current pending characteristic and UUID; set FAILED on creation errors.",
+    "Remove per-connection notification subscription on disconnect; log CCCD changes. The later bonded-persistence patch retains the authenticated speaker subscription in native preferences.",
+    "Register GAP callback through the existing ESPHome code-generation helper.",
+    "Respond to peer SEC_REQ for Just Works, log authentication success/failure and reject unexpected NoIO passkey/numeric-comparison requests. Never initiate a duplicate security procedure.",
+    "Normalize integer UUIDs <= 0xFFFF to from_uint16 so assigned descriptors, including automatically generated CCCDs, retain 16-bit ATT wire encoding; wider integers remain from_uint32.",
+    "Add VERBOSE-only GATTS CREATE/START/ADD_CHAR/ADD_DESCR completion status and handles, plus READ handle and WRITE handle/length/need_rsp. No payload or security key logging.",
+    "Include remote peer MAC in the existing CONNECT debug log and disconnect reason in the existing DISCONNECT debug log, without changing connection behavior.",
+    "Delay initial server advertising request until every configured service is RUNNING, so directed reconnection cannot race HID service creation; retain the existing advertising-required/reference-count mechanism.",
+    "Persist actual CCCD writes (including 0000) in ESPHome native flash preferences keyed by the exact speaker identity, HID service and Input Report ID read from 2908; sync writes immediately. No assumed/default subscription.",
+    "Restore only after successful authentication for the currently connected exact public speaker and a matching saved bond. Restore the IDF CCCD through esp_ble_gatts_set_attr_value, then populate the new connection notification table only after successful SET_ATTR_VAL completion. Clear live CCCD/notification state on disconnect without deleting saved state.",
+    "Restrict persisted HID report notifications to the authenticated speaker. A real CCCD write on the current connection takes precedence over saved state, including writes before authentication finishes.",
+    "When a real CCCD write races a pending restore, enqueue the actual latest value after the old stack update before cancelling the pending application restore, so unsubscribe wins in both IDF and application state.",
+    "Add explicit start_speaker_pairing maintenance action: remove only the verified speaker bond, suppress reconnection/CCCD persistence while pending, wait for successful bond removal and target disconnect, clear only the three target CCCD preferences to 0000 with immediate sync, then refresh ordinary advertising. No mass bond or NVS reset.",
+    "Scope GATTS lifecycle to the exact public speaker in local peripheral role, and ATT events to its server connection ID. Ignore outgoing original-remote lifecycle before service dispatch so remote disconnect cannot clear speaker CCCDs. Scope server GAP security responses/authentication to speaker; expose can_notify() using existing authenticated subscriber state for raw relay and HA gating.",
+    "BLECharacteristic::notify returns whether at least one send_indicate call returned ESP_OK. Preserve authenticated-subscriber filtering and stop after a send error; retain acceptance if an earlier send succeeded. Existing callers may ignore the return value; no speaker execution ACK is inferred."
+  ],
+  "verification": [
+    "All 13 upstream downloads matched GitHub git-blob SHA1 metadata.",
+    "Python __init__.py parsed successfully with compile().",
+    "No C++ compiler found in current PATH; full ESPHome build remains for parent task.",
+    "Independent source review passed: GAP callback slot/signature, ESP-IDF security event fields, duplicate UUID ownership and disconnect subscription cleanup.",
+    "Runnable integrity/Python syntax check: python verify_provenance.py",
+    "2026-10-17: actual ESPHome 2026.9.1 code-generation expression check passed for integer UUIDs 0, 0x2902, 0xFFFF, 0x10000, 0xFFFFFFFF and string 2902; only intended 16-bit integer cases changed constructor.",
+    "2026-10-17: diagnostic event member names verified against installed ESP-IDF 5.5.5 esp_gatts_api.h; forwarding to services remains unchanged. Incremental C++ build assigned to parent task.",
+    "2026-10-17: independent review of the directed-reconnect change; target is exact public bonded speaker only, and no raw advertiser or new retry state machine is added.",
+    "2026-10-17: inspected ESP-IDF 5.5.5 gatt_db/btc_ble_storage: custom AUTO_RSP CCCDs are RAM attributes, not automatically restored from bond storage. Verified get_attr_value, set_attr_value/SET_ATTR_VAL and auth peer/address-type fields against installed headers. Parent performs the incremental build and one fresh subscription followed by a reboot test.",
+    "Independent four-file review passed the ReportRef/identity/authentication/storage/restore path and verified IDF persists new bond keys before emitting AUTH complete. Its asynchronous restore-versus-write finding was fixed by reapplying the newest real CCCD write to the stack.",
+    "2026-10-17: targeted remove-bond API, event structure, automatic target disconnect and absent-bond failure semantics checked against installed ESP-IDF 5.5.5. Incremental C++ build and physical validation assigned to parent task.",
+    "Independent six-file review passed targeted removal API/struct, complete GAP event forwarding, both removal/disconnect orders, pending authentication gates, and target CCCD clearing. Flash-save failure remains explicitly logged; hardware validation pending.",
+    "Independent dual-role source review found no native API or lifecycle/security isolation blocker. Full build and paired two-link hardware validation remain pending.",
+    "2026-10-17: independent return-type/caller/partial-acceptance review passed; relay source checks verify rejection breaks before accepted=true. Parent performs the next C++ build and deployment."
+  ],
+  "license": {
+    "url": "https://raw.githubusercontent.com/esphome/esphome/0b2b16e664ecfc0add37f3435db1c2140b8a687e/LICENSE",
+    "sha256": "1f312390122725ee382f85af00e3df84f2490cd8fa61b9ea172bc6591cc0ac63"
+  },
+  "modified_files": [
+    "__init__.py",
+    "ble_characteristic.cpp",
+    "ble_characteristic.h",
+    "ble_server.cpp",
+    "ble_server.h"
+  ],
+  "configuration_requirements": [
+    "Set esp32_ble io_capability: none and the intended bond/sc_bond auth_req_mode in the device YAML.",
+    "Use this override only in the new JBL bridge configuration.",
+    "For original-remote relay, use max_connections 2 with server max_clients 1 and native BLE client scoped to public <configured remote public MAC>. This server owns only public speaker <configured speaker public MAC> security/lifecycle."
+  ],
+  "not_implemented": [
+    "Encrypted attribute-permission schema; restored HID notifications are gated to the authenticated speaker.",
+    "General multi-speaker/remote routing; only the verified JBL pair is supported."
+  ],
+  "archive_parameterization": {
+    "date": "2026-10-17",
+    "configuration": "Speaker public MAC from required esp32_ble_server.speaker_mac; remote public MAC from linked native ble_client.mac_address. Use local secrets.yaml.",
+    "review": "Independent source review passed identity/role/authentication gates, generated-array wiring and original CCCD key compatibility. See release manifest for compile status and evidence/validation-summary.json for physical validation scope.",
+    "hardware_tested": false,
+    "notes": [
+      "No automatic address learning or relaxed peer filtering.",
+      "CCCD identity retains the v1 lowercase MAC-based key format; matching original address preserves its preferences.",
+      "Historical review entries describe intermediate development; consolidated validation evidence is authoritative."
+    ]
+  }
+}

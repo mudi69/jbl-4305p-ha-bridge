@@ -1,0 +1,658 @@
+{
+  "device": {
+    "name": "JBL 4305P REMOTE",
+    "address": null,
+    "address_type": "public",
+    "manufacturer": "Realtek BT",
+    "model": "HBG BLE RC",
+    "speaker_address": null,
+    "identity_note": "Sample hardware addresses withheld; configure both public BLE MACs for each deployment."
+  },
+  "transport": {
+    "profile": "BLE HID over GATT",
+    "remote_role": "peripheral/GATT server",
+    "speaker_role": "central/GATT client",
+    "input_method": "ATT Handle Value Notification",
+    "session_hci_handle": "0x0203",
+    "handle_scope": "Handles observed on this firmware; emulators should use GATT service discovery."
+  },
+  "buttons": {
+    "usb": {
+      "label": "USB input (user confirmed physical label)",
+      "att_handle": "0x003d",
+      "press": "e900",
+      "release": "0000",
+      "verified_repetitions": 3,
+      "capture": "captures/jbl_hci_keymap_20261017_1239.pcapng",
+      "press_frames": [
+        1044,
+        1129,
+        1192
+      ],
+      "capture_format": "pcapng",
+      "report_id": 3,
+      "report_type": 1
+    },
+    "optical": {
+      "label": "Optical input",
+      "att_handle": "0x002f",
+      "press": "0000290000000000",
+      "release": "0000000000000000",
+      "verified_repetitions": 2,
+      "capture": "captures/jbl_hci_keymap_20261017_1241.pcapng",
+      "press_frames": [
+        386,
+        498
+      ],
+      "capture_format": "pcapng",
+      "report_id": 1,
+      "report_type": 1
+    },
+    "volume_down": {
+      "label": "Volume down",
+      "att_handle": "0x002f",
+      "press": "0000510000000000",
+      "release": "0000000000000000",
+      "verified_repetitions": 2,
+      "capture": "captures/jbl_hci_keymap_20261017_1241.pcapng",
+      "press_frames": [
+        682,
+        732
+      ],
+      "capture_format": "pcapng",
+      "report_id": 1,
+      "report_type": 1
+    },
+    "mute": {
+      "label": "Mute",
+      "att_handle": "0x002f",
+      "press": "0000820000000000",
+      "release": "0000000000000000",
+      "verified_repetitions": 2,
+      "capture": "captures/jbl_hci_keymap_20261017_1241.pcapng",
+      "press_frames": [
+        926,
+        991
+      ],
+      "capture_format": "pcapng",
+      "report_id": 1,
+      "report_type": 1
+    },
+    "streaming": {
+      "label": "Streaming input",
+      "att_handle": "0x003d",
+      "press": "ea00",
+      "release": "0000",
+      "verified_repetitions": 2,
+      "capture": "captures/jbl_hci_inputs_20261017_1242.pcapng",
+      "press_frames": [
+        2101,
+        2160
+      ],
+      "capture_format": "pcapng",
+      "report_id": 3,
+      "report_type": 1
+    },
+    "bluetooth": {
+      "label": "Bluetooth input",
+      "att_handle": "0x002f",
+      "press": "0000750000000000",
+      "release": "0000000000000000",
+      "verified_repetitions": 2,
+      "capture": "captures/jbl_hci_inputs_20261017_1242.pcapng",
+      "press_frames": [
+        2367,
+        2433
+      ],
+      "capture_format": "pcapng",
+      "report_id": 1,
+      "report_type": 1
+    },
+    "balanced": {
+      "label": "Balanced input",
+      "att_handle": "0x003d",
+      "press": "2302",
+      "release": "0000",
+      "verified_repetitions": 2,
+      "capture": "captures/jbl_hci_inputs_20261017_1242.pcapng",
+      "press_frames": [
+        2651,
+        2721
+      ],
+      "capture_format": "pcapng",
+      "report_id": 3,
+      "report_type": 1
+    },
+    "aux": {
+      "label": "Auxiliary input",
+      "att_handle": "0x002f",
+      "press": "0000760000000000",
+      "release": "0000000000000000",
+      "verified_repetitions": 2,
+      "capture": "captures/jbl_hci_inputs_20261017_1242.pcapng",
+      "press_frames": [
+        3055,
+        3250
+      ],
+      "capture_format": "pcapng",
+      "report_id": 1,
+      "report_type": 1
+    },
+    "volume_up": {
+      "label": "Volume up",
+      "att_handle": "0x002f",
+      "press": "0000520000000000",
+      "release": "0000000000000000",
+      "verified_repetitions": 2,
+      "capture": "captures/jbl_hci_media_20261017_1244.pcapng",
+      "press_frames": [
+        453,
+        498
+      ],
+      "capture_format": "pcapng",
+      "report_id": 1,
+      "report_type": 1
+    },
+    "previous": {
+      "label": "Previous track",
+      "att_handle": "0x002f",
+      "press": "0000500000000000",
+      "release": "0000000000000000",
+      "verified_repetitions": 2,
+      "capture": "captures/jbl_hci_media_20261017_1244.pcapng",
+      "press_frames": [
+        659,
+        716
+      ],
+      "capture_format": "pcapng",
+      "report_id": 1,
+      "report_type": 1
+    },
+    "play_pause": {
+      "label": "Play/pause",
+      "att_handle": "0x002f",
+      "press": "0000580000000000",
+      "release": "0000000000000000",
+      "verified_repetitions": 2,
+      "capture": "captures/jbl_hci_media_20261017_1244.pcapng",
+      "press_frames": [
+        794,
+        849
+      ],
+      "capture_format": "pcapng",
+      "report_id": 1,
+      "report_type": 1
+    },
+    "next": {
+      "label": "Next track",
+      "att_handle": "0x002f",
+      "press": "00004f0000000000",
+      "release": "0000000000000000",
+      "verified_repetitions": 2,
+      "capture": "captures/jbl_hci_media_20261017_1244.pcapng",
+      "press_frames": [
+        952,
+        1003
+      ],
+      "capture_format": "pcapng",
+      "report_id": 1,
+      "report_type": 1
+    },
+    "power": {
+      "label": "Power (user confirmed controlled sequence: Power twice, then USB once)",
+      "att_handle": "0x002f",
+      "press": "0000660000000000",
+      "release": "0000000000000000",
+      "verified_repetitions": 2,
+      "capture": "captures/jbl_nordic_client_2026-10-17T05-08-57-977Z.jsonl",
+      "capture_format": "nordic_jsonl",
+      "press_lines": [
+        54,
+        56
+      ],
+      "report_id": 1,
+      "report_type": 1
+    }
+  },
+  "limitations": [
+    "Key labels are based on controlled physical button presses reported by the user, not standard HID usage names.",
+    "Windows initial Raw Input timing-based USB=Esc inference was incorrect; superseded by isolated USB test and direct HCI data.",
+    "ID1 and ID30 output Report References exist in GATT but the captured report map declares input fields only; no output-write behavior was tested.",
+    "An advertised read property does not guarantee a successful value read: three input reports return ATT application error 0x0180, and ID30 output returns 0x010A.",
+    "Original-hardware bridge controls were later verified; see evidence/validation-summary.json. Parameterized release and another hardware pair have not been hardware-validated."
+  ],
+  "hid_report_descriptor": {
+    "source": "Windows HIDCLASS ETW event3, target exactDeviceInstancePath",
+    "length": 79,
+    "file": "captures/jbl_report_descriptor_20261017_1241.bin",
+    "hex": "05010906a10105070906a101850195087508150025ff190029ff8100c00600ff0900a101851e95ff7508150025ff190029ff8100c0050c0901a101850319002a9c021500269c02950275108100c0c0",
+    "report_id_input_bytes": {
+      "1": 8,
+      "30": 255,
+      "3": 4
+    },
+    "note": "Report Reference 2908 directly verifies input bindings: 0x002f=ID1, 0x0036=ID30, 0x003d=ID3. Actual ID3 notifications contain two payload bytes despite the four bytes declared by the report map; preserve measured data. GATT also exposes ID1/ID30 output reports absent from this report map.",
+    "sha256": "08675841fbf0082baf784d4c0e616da0127f1a0be9ebb8e47d784f21c4102fd3",
+    "gatt_capture": "captures/jbl_nordic_client_2026-10-17T05-08-57-977Z.jsonl",
+    "gatt_source_line": 22,
+    "gatt_file": "captures/jbl_nordic_client_2026-10-17T05-08-57-977Z_report_map.bin",
+    "gatt_att_handle": "0x002d",
+    "gatt_equals_windows_hidclass": true
+  },
+  "cross_checks": [
+    {
+      "button": "usb",
+      "capture": "captures/jbl_nordic_client_2026-10-17T05-08-57-977Z.jsonl",
+      "capture_format": "nordic_jsonl",
+      "press_lines": [
+        58
+      ],
+      "verified_repetitions": 1,
+      "purpose": "Independent Nordic GATT client agrees with Windows HCI for controlled physical USB press."
+    }
+  ],
+  "gatt_hid": {
+    "capture": "captures/jbl_nordic_client_2026-10-17T05-08-57-977Z.jsonl",
+    "service_uuid": "1812",
+    "service_start_handle": 37,
+    "service_end_handle": 63,
+    "services_discovery": [
+      {
+        "uuid": "1801",
+        "start_handle": 1,
+        "end_handle": 4
+      },
+      {
+        "uuid": "1800",
+        "start_handle": 5,
+        "end_handle": 13
+      },
+      {
+        "uuid": "180F",
+        "start_handle": 14,
+        "end_handle": 17
+      },
+      {
+        "uuid": "180A",
+        "start_handle": 18,
+        "end_handle": 36
+      },
+      {
+        "uuid": "1812",
+        "start_handle": 37,
+        "end_handle": 63
+      },
+      {
+        "uuid": "0000D1FF3C17D2938E4814FE2E4DA212",
+        "start_handle": 64,
+        "end_handle": 69
+      },
+      {
+        "uuid": "0000D0FF3C17D2938E4814FE2E4DA212",
+        "start_handle": 70,
+        "end_handle": 88
+      },
+      {
+        "uuid": "000062873C17D2938E4814FE2E4DA212",
+        "start_handle": 89,
+        "end_handle": 65535
+      }
+    ],
+    "services_source_line": 15,
+    "characteristics": [
+      {
+        "uuid": "2A4A",
+        "declaration_handle": 38,
+        "value_handle": 39,
+        "properties": {
+          "broadcast": false,
+          "read": true,
+          "write_wo_resp": false,
+          "write": false,
+          "notify": false,
+          "indicate": false,
+          "auth_signed_wr": false
+        },
+        "source_line": 16,
+        "descriptors": [],
+        "read": {
+          "hex": "00000001",
+          "source_line": 17
+        }
+      },
+      {
+        "uuid": "2A4C",
+        "declaration_handle": 40,
+        "value_handle": 41,
+        "properties": {
+          "broadcast": false,
+          "read": false,
+          "write_wo_resp": true,
+          "write": false,
+          "notify": false,
+          "indicate": false,
+          "auth_signed_wr": false
+        },
+        "source_line": 18,
+        "descriptors": []
+      },
+      {
+        "uuid": "2A4E",
+        "declaration_handle": 42,
+        "value_handle": 43,
+        "properties": {
+          "broadcast": false,
+          "read": true,
+          "write_wo_resp": true,
+          "write": false,
+          "notify": false,
+          "indicate": false,
+          "auth_signed_wr": false
+        },
+        "source_line": 19,
+        "descriptors": [],
+        "read": {
+          "hex": "01",
+          "source_line": 20
+        }
+      },
+      {
+        "uuid": "2A4B",
+        "declaration_handle": 44,
+        "value_handle": 45,
+        "properties": {
+          "broadcast": false,
+          "read": true,
+          "write_wo_resp": false,
+          "write": false,
+          "notify": false,
+          "indicate": false,
+          "auth_signed_wr": false
+        },
+        "source_line": 21,
+        "descriptors": [],
+        "read": {
+          "hex": "05010906a10105070906a101850195087508150025ff190029ff8100c00600ff0900a101851e95ff7508150025ff190029ff8100c0050c0901a101850319002a9c021500269c02950275108100c0c0",
+          "source_line": 22
+        }
+      },
+      {
+        "uuid": "2A4D",
+        "declaration_handle": 46,
+        "value_handle": 47,
+        "properties": {
+          "broadcast": false,
+          "read": true,
+          "write_wo_resp": false,
+          "write": true,
+          "notify": true,
+          "indicate": false,
+          "auth_signed_wr": false
+        },
+        "source_line": 23,
+        "descriptors": [
+          {
+            "uuid": "2902",
+            "handle": 48,
+            "source_line": 24,
+            "read": {
+              "hex": "0000",
+              "source_line": 25
+            }
+          },
+          {
+            "uuid": "2908",
+            "handle": 49,
+            "source_line": 26,
+            "read": {
+              "hex": "0101",
+              "source_line": 27,
+              "report_id": 1,
+              "report_type": 1
+            }
+          }
+        ],
+        "read_error": {
+          "error": "Read operation failed: BLE_GATT_STATUS_ATTERR_APP_BEGIN (0x0180)",
+          "source_line": 28
+        },
+        "notification_subscription_source_line": 29
+      },
+      {
+        "uuid": "2A4D",
+        "declaration_handle": 50,
+        "value_handle": 51,
+        "properties": {
+          "broadcast": false,
+          "read": true,
+          "write_wo_resp": true,
+          "write": true,
+          "notify": false,
+          "indicate": false,
+          "auth_signed_wr": false
+        },
+        "source_line": 30,
+        "descriptors": [
+          {
+            "uuid": "2908",
+            "handle": 52,
+            "source_line": 31,
+            "read": {
+              "hex": "0102",
+              "source_line": 32,
+              "report_id": 1,
+              "report_type": 2
+            }
+          }
+        ],
+        "read": {
+          "hex": "00",
+          "source_line": 33
+        }
+      },
+      {
+        "uuid": "2A4D",
+        "declaration_handle": 53,
+        "value_handle": 54,
+        "properties": {
+          "broadcast": false,
+          "read": true,
+          "write_wo_resp": false,
+          "write": true,
+          "notify": true,
+          "indicate": false,
+          "auth_signed_wr": false
+        },
+        "source_line": 34,
+        "descriptors": [
+          {
+            "uuid": "2902",
+            "handle": 55,
+            "source_line": 35,
+            "read": {
+              "hex": "0000",
+              "source_line": 36
+            }
+          },
+          {
+            "uuid": "2908",
+            "handle": 56,
+            "source_line": 37,
+            "read": {
+              "hex": "1e01",
+              "source_line": 38,
+              "report_id": 30,
+              "report_type": 1
+            }
+          }
+        ],
+        "read_error": {
+          "error": "Read operation failed: BLE_GATT_STATUS_ATTERR_APP_BEGIN (0x0180)",
+          "source_line": 39
+        },
+        "notification_subscription_source_line": 40
+      },
+      {
+        "uuid": "2A4D",
+        "declaration_handle": 57,
+        "value_handle": 58,
+        "properties": {
+          "broadcast": false,
+          "read": true,
+          "write_wo_resp": true,
+          "write": true,
+          "notify": false,
+          "indicate": false,
+          "auth_signed_wr": false
+        },
+        "source_line": 41,
+        "descriptors": [
+          {
+            "uuid": "2908",
+            "handle": 59,
+            "source_line": 42,
+            "read": {
+              "hex": "1e02",
+              "source_line": 43,
+              "report_id": 30,
+              "report_type": 2
+            }
+          }
+        ],
+        "read_error": {
+          "error": "Read operation failed: BLE_GATT_STATUS_ATTERR_ATTRIBUTE_NOT_FOUND (0x010A)",
+          "source_line": 44
+        }
+      },
+      {
+        "uuid": "2A4D",
+        "declaration_handle": 60,
+        "value_handle": 61,
+        "properties": {
+          "broadcast": false,
+          "read": true,
+          "write_wo_resp": false,
+          "write": true,
+          "notify": true,
+          "indicate": false,
+          "auth_signed_wr": false
+        },
+        "source_line": 45,
+        "descriptors": [
+          {
+            "uuid": "2902",
+            "handle": 62,
+            "source_line": 46,
+            "read": {
+              "hex": "0000",
+              "source_line": 47
+            }
+          },
+          {
+            "uuid": "2908",
+            "handle": 63,
+            "source_line": 48,
+            "read": {
+              "hex": "0301",
+              "source_line": 49,
+              "report_id": 3,
+              "report_type": 1
+            }
+          }
+        ],
+        "read_error": {
+          "error": "Read operation failed: BLE_GATT_STATUS_ATTERR_APP_BEGIN (0x0180)",
+          "source_line": 50
+        },
+        "notification_subscription_source_line": 51
+      }
+    ],
+    "report_references": [
+      {
+        "characteristic_handle": 47,
+        "handle": 49,
+        "hex": "0101",
+        "report_id": 1,
+        "report_type": 1,
+        "source_line": 27
+      },
+      {
+        "characteristic_handle": 51,
+        "handle": 52,
+        "hex": "0102",
+        "report_id": 1,
+        "report_type": 2,
+        "source_line": 32
+      },
+      {
+        "characteristic_handle": 54,
+        "handle": 56,
+        "hex": "1e01",
+        "report_id": 30,
+        "report_type": 1,
+        "source_line": 38
+      },
+      {
+        "characteristic_handle": 58,
+        "handle": 59,
+        "hex": "1e02",
+        "report_id": 30,
+        "report_type": 2,
+        "source_line": 43
+      },
+      {
+        "characteristic_handle": 61,
+        "handle": 63,
+        "hex": "0301",
+        "report_id": 3,
+        "report_type": 1,
+        "source_line": 49
+      }
+    ],
+    "hid_information_hex": "00000001",
+    "protocol_mode_hex": "01",
+    "property_scope": "All nine HID service characteristic declarations, read values/errors, and descriptors are direct Nordic GATT evidence. Other service characteristics were not enumerated by this client."
+  },
+  "security_observed": {
+    "capture": "captures/jbl_nordic_client_2026-10-17T05-08-57-977Z.jsonl",
+    "central": "Nordic connectivity APIv5 client",
+    "pairing": "Legacy JustWorks bonding; no MITM, no LE Secure Connections",
+    "security_mode": 1,
+    "security_level": 2,
+    "authentication_status": 0,
+    "bonded": true,
+    "source_lines": [
+      12,
+      13,
+      14
+    ],
+    "scope": "Historical remote-to-Nordic session. Later speaker/bridge validation is summarized separately in evidence/validation-summary.json."
+  },
+  "advertising": {
+    "capture": "captures/jbl_legacy_follow_20261017_122232_268395.pcap",
+    "frame": 5836,
+    "crc_ok": true,
+    "pdu_type": "ADV_IND",
+    "pdu_type_value": 0,
+    "address": null,
+    "address_type": "public",
+    "flags_hex": "05",
+    "flags": [
+      "LE Limited Discoverable Mode",
+      "BR/EDR Not Supported"
+    ],
+    "complete_16bit_service_uuids": [
+      "1812"
+    ],
+    "appearance_hex": "0180",
+    "complete_local_name": "JBL 4305P REMOTE",
+    "manufacturer_data_present": false,
+    "ad_data_hex": "020105030312180319800111094a424c2034333035502052454d4f5445",
+    "scope": "One CRC-valid remote advertisement during a controlled pairing session; not an assertion about every advertising state."
+  },
+  "archive": {
+    "raw_captures": "Private local archive, not included in Git; filenames/frame numbers retained for provenance.",
+    "deployment_validation": "evidence/validation-summary.json",
+    "public_report_descriptor": "evidence/hid-report-map.bin"
+  }
+}

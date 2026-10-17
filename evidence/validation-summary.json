@@ -1,0 +1,92 @@
+{
+  "archive_date": "2026-10-17",
+  "timezone": "Asia/Shanghai",
+  "hardware": {
+    "speaker": "JBL 4305P",
+    "speaker_firmware_observed": "0.101.1581.0x3bf911c",
+    "remote_name": "JBL 4305P REMOTE",
+    "remote_device_information": {
+      "manufacturer": "Realtek BT",
+      "model": "HBG BLE RC"
+    },
+    "bridge": "ESP32-C3, 4 MB, esp32-c3-devkitm-1 configuration",
+    "sample_count": 1,
+    "private_addresses_published": false
+  },
+  "software": {
+    "esphome": "2026.9.1",
+    "esp_idf": "5.5.5",
+    "home_assistant_core": "2026.9.4",
+    "home_assistant_frontend": "20260826.7"
+  },
+  "original_fixed_address_build": {
+    "time": "2026-10-17T19:52:45+08:00",
+    "ota_sha256": "8bbec773f69f5b6a0fd529c711f1a5c3c91595848a7390f107bdcdf959b80b22",
+    "binary_included": false,
+    "reason": "Contains installation credentials; retained in private archive"
+  },
+  "protocol": {
+    "captured_buttons": 13,
+    "verified_press_release_pairs": 28,
+    "report_map_bytes": 79,
+    "report_map_sha256": "08675841fbf0082baf784d4c0e616da0127f1a0be9ebb8e47d784f21c4102fd3",
+    "input_report_ids": [
+      1,
+      3,
+      30
+    ],
+    "measured_key_payload_bytes": {
+      "1": 8,
+      "3": 2
+    },
+    "raw_captures_included": false,
+    "public_static_check": "firmware/esphome/check_jbl_config.py"
+  },
+  "hardware_verified_on_original_pair": [
+    "Original remote -> ESP32 -> speaker Optical then USB input switching",
+    "HA -> ESP32 -> speaker Optical then USB input switching",
+    "Original remote volume down: speaker network readout 29 -> 26; HA volume up restored 29 in that test",
+    "HA standby, original remote power wake; red then white/input LEDs confirmed",
+    "ESP32 OTA reboot retained bonds and speaker subscriptions; original remote first press woke/reconnected, second press controlled",
+    "Separate original-remote pairing maintenance button re-paired remote while speaker remained connected",
+    "Chinese receive event types and independent HA send history deployed; repeated same-key sends created separate records",
+    "Merged native HA dashboard loaded status, controls, receive/send history and separate pairing view"
+  ],
+  "latest_event_validation": {
+    "user_observation": "Input switching normal; first press needed wake",
+    "ha_receive_local_times": [
+      "19:59:01 USB 输入",
+      "19:59:06 USB 输入",
+      "19:59:12 光纤输入",
+      "19:59:16 USB 输入"
+    ],
+    "ha_send_local_times": [
+      "20:00:39 USB 输入（已提交）",
+      "20:00:49 USB 输入（已提交）"
+    ],
+    "separate_api_observer_confirmed": true,
+    "ha_send_did_not_add_receive_events": true,
+    "note": "HA and observer clocks are separate; observer receipt approximately one second later"
+  },
+  "not_hardware_verified": [
+    "Second speaker/remote pair",
+    "MAC-parameterized release firmware",
+    "All 13 speaker actions individually",
+    "Long-term stability and whole-system cold power cycles",
+    "Other ESP32 variants and flash sizes",
+    "First-key retention after sleep/restart",
+    "Injected queue overflow or BLE release-delivery failure",
+    "HA/Wi-Fi outage experiment",
+    "Large vendor reports and two-link MTU behavior"
+  ],
+  "parameterized_release": {
+    "build_result": "See releases/2026.10.17/manifest.json",
+    "production_device_updated": false,
+    "new_pair_compatibility": "Expected only when model/GATT/Report Map and payloads match; configure both public BLE MACs and verify on hardware"
+  },
+  "event_semantics": {
+    "received": "Authenticated original-remote report received by ESP32",
+    "submitted": "Local BLE stack accepted press report; not delivery/execution/release ACK",
+    "history": "No guaranteed offline or overflow audit; historical English entries left unchanged"
+  }
+}

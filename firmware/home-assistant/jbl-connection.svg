@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 370" role="img" aria-labelledby="title desc">
+  <title id="title">JBL 4305P 控制连接关系</title>
+  <desc id="desc">原装遥控器通过蓝牙向 ESP32 中转发送按键，ESP32 再通过蓝牙控制 JBL 音箱。Home Assistant 通过 Wi-Fi 连接同一块 ESP32。</desc>
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#72d5f5"/></marker>
+  </defs>
+  <rect width="900" height="370" rx="20" fill="#162331"/>
+  <g font-family="Microsoft YaHei, Noto Sans SC, sans-serif" text-anchor="middle">
+    <rect x="326" y="22" width="248" height="67" rx="14" fill="#243e52" stroke="#72d5f5"/>
+    <text x="450" y="64" fill="#f1f8ff" font-size="26">Home Assistant</text>
+    <path d="M450 91V173" stroke="#72d5f5" stroke-width="4" fill="none" marker-end="url(#arrow)"/>
+    <text x="559" y="140" fill="#aedeea" font-size="22">Wi-Fi／局域网</text>
+    <g fill="#223748" stroke="#55738b" stroke-width="2">
+      <rect x="30" y="186" width="226" height="133" rx="17"/>
+      <rect x="337" y="186" width="226" height="133" rx="17"/>
+      <rect x="644" y="186" width="226" height="133" rx="17"/>
+    </g>
+    <g fill="none" stroke="#a4e1f2" stroke-width="3">
+      <rect x="125" y="203" width="36" height="51" rx="8"/>
+      <circle cx="143" cy="216" r="3"/><path d="M135 228H151M135 238H151"/>
+      <rect x="428" y="207" width="44" height="40" rx="5"/>
+      <path d="M437 200V207M450 200V207M463 200V207M437 247V254M450 247V254M463 247V254M421 216H428M421 237H428M472 216H479M472 237H479"/>
+      <rect x="735" y="201" width="44" height="56" rx="5"/>
+      <circle cx="757" cy="215" r="6"/><circle cx="757" cy="240" r="11"/>
+    </g>
+    <g fill="#f1f8ff" font-size="25">
+      <text x="143" y="287">原装遥控器</text>
+      <text x="450" y="287">ESP32 中转</text>
+      <text x="757" y="287">JBL 4305P 音箱</text>
+    </g>
+    <g fill="none" stroke="#72d5f5" stroke-width="4" marker-end="url(#arrow)">
+      <path d="M263 250H327"/><path d="M570 250H634"/>
+    </g>
+    <g fill="#aedeea" font-size="22"><text x="295" y="233">蓝牙</text><text x="604" y="233">蓝牙</text></g>
+    <text x="450" y="349" fill="#a5b8c8" font-size="19">箭头表示按键控制方向 · 实时连接状态见下方</text>
+  </g>
+</svg>

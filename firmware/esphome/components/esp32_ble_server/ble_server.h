@@ -1,0 +1,145 @@
+#pragma once
+
+#include "ble_service.h"
+#include "ble_characteristic.h"
+
+#include "esphome/components/esp32_ble/ble.h"
+#include "esphome/components/esp32_ble/ble_uuid.h"
+#include "esphome/components/bytebuffer/bytebuffer.h"
+#include "esphome/core/component.h"
+#include "esphome/core/helpers.h"
+
+#include <memory>
+#include <vector>
+#include <unordered_map>
+#include <functional>
+
+#ifdef USE_ESP32
+
+#include <esp_gap_ble_api.h>
+#include <esp_gatts_api.h>
+
+namespace esphome::esp32_ble_server {
+
+using namespace esp32_ble;
+using namespace bytebuffer;
+
+class BLEServer final : public Component, public Parented<ESP32BLE> {
+ public:
+  void setup() override;
+  void loop() override;
+  void dump_config() override;
+  float get_setup_priority() const override;
+  bool can_proceed() override;
+
+  ESPHOME_ALWAYS_INLINE bool is_running() { return this->parent_->is_active() && this->state_ == RUNNING; }
+
+  void set_manufacturer_data(const std::vector<uint8_t> &data) {
+    this->manufacturer_data_ = data;
+    this->restart_advertising_();
+  }
+
+  /** Whether this server needs the device to advertise so clients can find and connect to it.
+   *
+   * False for a server that only hosts services created at runtime (e.g. esp32_improv), which
+   * request advertising themselves for as long as they need it.
+   */
+  void set_advertising_required(bool required) { this->advertising_required_ = required; }
+
+  void set_max_clients(uint8_t max_clients) { this->max_clients_ = max_clients; }
+  uint8_t get_max_clients() const { return this->max_clients_; }
+  void set_speaker_address(const std::array<uint8_t, 6> &address) { this->speaker_address_ = address; }
+  const std::array<uint8_t, 6> &get_speaker_address() const { return this->speaker_address_; }
+
+  BLEService *create_service(ESPBTUUID uuid, bool advertise = false, uint16_t num_handles = 15);
+  void remove_service(ESPBTUUID uuid, uint8_t inst_id = 0);
+  BLEService *get_service(ESPBTUUID uuid, uint8_t inst_id = 0);
+  void enqueue_start_service(BLEService *service) { this->services_to_start_.push_back(service); }
+  void set_device_information_service(BLEService *service) { this->device_information_service_ = service; }
+
+  esp_gatt_if_t get_gatts_if() { return this->gatts_if_; }
+  uint32_t get_connected_client_count() { return this->client_count_; }
+  const uint16_t *get_clients() const { return this->clients_; }
+  uint8_t get_client_count() const { return this->client_count_; }
+  bool is_authenticated_speaker(uint16_t conn_id) const {
+    return !this->speaker_pairing_pending_ && this->speaker_authenticated_ && this->speaker_conn_id_ == conn_id;
+  }
+  void register_bonded_characteristic(BLECharacteristic *characteristic);
+  void start_speaker_pairing();
+
+  void gatts_event_handler(esp_gatts_cb_event_t event, esp_gatt_if_t gatts_if, esp_ble_gatts_cb_param_t *param);
+  void gap_event_handler(esp_gap_ble_cb_event_t event, esp_ble_gap_cb_param_t *param);
+
+  void ble_before_disabled_event_handler();
+
+  // Direct callback registration - supports multiple callbacks
+  void on_connect(std::function<void(uint16_t)> &&callback) {
+    this->callbacks_.push_back({CallbackType::ON_CONNECT, std::move(callback)});
+  }
+  void on_disconnect(std::function<void(uint16_t)> &&callback) {
+    this->callbacks_.push_back({CallbackType::ON_DISCONNECT, std::move(callback)});
+  }
+
+ protected:
+  enum class CallbackType : uint8_t {
+    ON_CONNECT,
+    ON_DISCONNECT,
+  };
+
+  struct CallbackEntry {
+    CallbackType type;
+    std::function<void(uint16_t)> callback;
+  };
+
+  struct ServiceEntry {
+    ESPBTUUID uuid;
+    uint8_t inst_id;
+    BLEService *service;
+  };
+
+  void restart_advertising_();
+  void request_advertising_();
+  void release_advertising_();
+  void finish_speaker_pairing_();
+  bool has_speaker_bond_(bool *query_ok = nullptr) const;
+
+  int8_t find_client_index_(uint16_t conn_id) const;
+  void add_client_(uint16_t conn_id);
+  void remove_client_(uint16_t conn_id);
+  void dispatch_callbacks_(CallbackType type, uint16_t conn_id);
+
+  std::vector<CallbackEntry> callbacks_;
+
+  std::vector<uint8_t> manufacturer_data_{};
+  esp_gatt_if_t gatts_if_{0};
+  bool registered_{false};
+  bool advertising_required_{true};
+  bool advertising_requested_{false};
+  uint16_t speaker_conn_id_{0xFFFF};
+  std::array<uint8_t, 6> speaker_address_{};
+  bool speaker_authenticated_{false};
+  bool speaker_pairing_pending_{false};
+  bool speaker_bond_removed_{false};
+  std::vector<BLECharacteristic *> bonded_characteristics_;
+
+  uint16_t clients_[USE_ESP32_BLE_MAX_CONNECTIONS]{};
+  uint8_t client_count_{0};
+  uint8_t max_clients_{1};
+  std::vector<ServiceEntry> services_{};
+  std::vector<BLEService *> services_to_start_{};
+  BLEService *device_information_service_{};
+
+  enum State : uint8_t {
+    INIT = 0x00,
+    REGISTERING,
+    STARTING_SERVICE,
+    RUNNING,
+  } state_{INIT};
+};
+
+// NOLINTNEXTLINE(cppcoreguidelines-avoid-non-const-global-variables)
+extern BLEServer *global_ble_server;
+
+}  // namespace esphome::esp32_ble_server
+
+#endif

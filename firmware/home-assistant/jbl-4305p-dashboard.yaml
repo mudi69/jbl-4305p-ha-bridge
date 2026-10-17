@@ -1,0 +1,183 @@
+title: JBL 4305P
+views:
+  - title: 状态与控制
+    path: control
+    type: sections
+    max_columns: 2
+    sections:
+      - type: grid
+        cards:
+          - type: heading
+            heading: 连接与遥控接收
+            icon: mdi:remote
+          - type: picture
+            image: /local/jbl-4305p/connection.svg
+            alt_text: 原装遥控器通过蓝牙、Home Assistant 通过 Wi-Fi，将按键交给 ESP32，再由 ESP32 通过蓝牙控制 JBL 音箱
+          - type: entities
+            show_header_toggle: false
+            entities:
+              - entity: binary_sensor.jbl_4305p_bridge_yuan_zhuang_yao_kong_qi_lian_jie
+                name: 原装遥控器 → ESP32
+              - entity: binary_sensor.jbl_4305p_bridge_ble_connected
+                name: ESP32 → 音箱
+              - type: divider
+              - entity: sensor.jbl_4305p_bridge_zui_jin_shou_dao_yuan_yao_kong_an_jian
+                name: 最近收到原遥控按键
+              - entity: event.jbl_4305p_bridge_yuan_yao_kong_an_jian_jie_shou_shi_jian
+                name: 最近接收时间
+                time_format:
+                  type: time
+                  style: long
+          - type: entities
+            title: HA 发送
+            show_header_toggle: false
+            entities:
+              - entity: sensor.jbl_4305p_bridge_zui_jin_ha_an_jian_fa_song
+                name: 最近发送结果
+              - entity: event.jbl_4305p_bridge_ha_an_jian_fa_song_shi_jian
+                name: 最近发送时间
+                time_format:
+                  type: time
+                  style: long
+          - type: markdown
+            content: |
+              **原遥控接收与 HA 发送分别记录。** 本页下方可查看两者最近 24 小时的活动。
+
+              原遥控器同一个键松开再按会更新时间；长按重复报文和松开报文不会刷屏。HA 重复发送同一键也会分别记录。点击时间可查看完整日期和事件详情。
+
+              “收到”表示 ESP32 已接收；“已提交”表示蓝牙协议栈接受了发送请求。**两者均不代表音箱已执行。** “未发送”的原因会显示在最近发送结果中。
+
+              图中箭头表示控制方向，实时连接状态见上方；连接状态不等于音箱开机状态。
+
+              ESP32 请保持通电。重新配对的完整步骤在顶部的 **配对说明** 页面。
+      - type: grid
+        cards:
+          - type: heading
+            heading: 音箱控制
+            icon: mdi:speaker
+          - type: entities
+            show_header_toggle: false
+            entities:
+              - entity: button.jbl_4305p_bridge_power
+                name: 待机／唤醒
+              - entity: button.jbl_4305p_bridge_volume_up
+                name: 音量增加
+              - entity: button.jbl_4305p_bridge_volume_down
+                name: 音量降低
+              - entity: button.jbl_4305p_bridge_mute
+                name: 静音／取消静音
+              - type: divider
+              - entity: button.jbl_4305p_bridge_streaming
+                name: 网络播放
+              - entity: button.jbl_4305p_bridge_bluetooth
+                name: 蓝牙输入
+              - entity: button.jbl_4305p_bridge_usb
+                name: USB 输入
+              - entity: button.jbl_4305p_bridge_optical
+                name: 光纤输入
+              - entity: button.jbl_4305p_bridge_balanced
+                name: 平衡输入
+              - entity: button.jbl_4305p_bridge_aux
+                name: AUX 辅助输入
+              - type: divider
+              - entity: button.jbl_4305p_bridge_previous
+                name: 上一首
+              - entity: button.jbl_4305p_bridge_play_pause
+                name: 播放／暂停
+              - entity: button.jbl_4305p_bridge_next
+                name: 下一首
+      - type: grid
+        cards:
+          - type: logbook
+            title: 原遥控接收 · 最近 24 小时
+            target:
+              entity_id:
+                - event.jbl_4305p_bridge_yuan_yao_kong_an_jian_jie_shou_shi_jian
+            hours_to_show: 24
+            name_detail: entity
+          - type: markdown
+            content: |
+              更新后的接收事件使用中文。此前已经保存的英文历史会保留原样，HA 原生自定义事件不支持为这些旧记录单独配置翻译。
+      - type: grid
+        cards:
+          - type: logbook
+            title: HA 发送 · 最近 24 小时
+            target:
+              entity_id:
+                - event.jbl_4305p_bridge_ha_an_jian_fa_song_shi_jian
+            hours_to_show: 24
+            name_detail: entity
+          - type: markdown
+            content: |
+              这里记录 ESP32 对 **13 个音箱控制按键**的发送处理结果，原遥控器转发不会混入。两个维护配对按钮可查看各自的活动。
+
+              **已提交**：蓝牙协议栈接受按下报告；**未发送**：请求被拒绝。记录不包含音箱执行确认。
+
+              统一发送结果历史从本次功能启用后开始；网络离线、未到达 ESP32 或超过队列容量的请求不在此列。更早历史的保留情况取决于 HA 记录设置。
+  - title: 配对说明
+    path: pairing
+    type: sections
+    max_columns: 2
+    sections:
+      - type: grid
+        cards:
+          - type: heading
+            heading: 原装遥控器 → ESP32
+            icon: mdi:remote
+          - type: markdown
+            content: |
+              ### 重新配对原装遥控器
+
+              1. ESP32 和音箱保持通电，把遥控器放在 ESP32 附近。
+              2. 点击下方 **重新配对原装遥控器（维护）**。
+              3. 同时按住原遥控器的 **Streaming（网络播放）＋播放／暂停／OK** 约 **3 秒**后松开。
+              4. 等“原装遥控器 → ESP32”显示已连接，再用 **光纤 → USB** 检查切换，并在“状态与控制”页查看收到的按键。
+
+              此按钮只重置原遥控器这一侧的绑定，保留音箱配对。**无需操作音箱旋钮。**
+          - type: entities
+            show_header_toggle: false
+            entities:
+              - entity: button.jbl_4305p_bridge_zhong_xin_pei_dui_yuan_zhuang_yao_kong_qi_wei_hu
+                name: 重新配对原装遥控器（维护）
+              - entity: binary_sensor.jbl_4305p_bridge_yuan_zhuang_yao_kong_qi_lian_jie
+                name: 原装遥控器 → ESP32
+          - type: markdown
+            content: |
+              ### 日常使用不用重新配对
+
+              配对信息会保留，ESP32 需持续供电。ESP32 重启后，原遥控器第一次按键可能只用于唤醒并恢复连接；等约 **5 秒**再按一次。
+
+              原遥控器应连接 ESP32，由 ESP32 转发给音箱；日常不要重新将原遥控器直接配对到音箱。
+
+              最新按键在 ESP32 重启后重置；HA 离线期间的按键事件不会补传。历史是否保留及保留多久取决于 HA 的记录设置。
+      - type: grid
+        cards:
+          - type: heading
+            heading: ESP32 → JBL 音箱
+            icon: mdi:speaker-wireless
+          - type: markdown
+            content: |
+              ### 重新配对音箱
+
+              1. ESP32 保持通电。打开主音箱背面的 **POWER** 开关，等音箱启动并唤醒至 **白色电源灯、输入灯亮起**。
+              2. 点击下方 **重新配对音箱（维护）**。
+              3. 按住音箱正面左侧 **VOL/MUTE（音量／静音）旋钮**约 **4 秒**后松开。
+              4. 等“ESP32 → 音箱”显示已连接，再从“状态与控制”页按 **光纤输入 → USB 输入**，观察音箱指示灯确认。
+
+              此按钮只重置音箱这一侧的配对，保留原遥控器绑定；原遥控器此时不用进入配对模式。
+          - type: entities
+            show_header_toggle: false
+            entities:
+              - entity: button.jbl_4305p_bridge_pair_speaker
+                name: 重新配对音箱（维护）
+              - entity: binary_sensor.jbl_4305p_bridge_ble_connected
+                name: ESP32 → 音箱
+          - type: markdown
+            content: |
+              ### 音箱迟迟不连接时
+
+              关闭音箱背面 POWER，等 **10 秒**后打开；等白灯和输入灯亮起，再按住左侧 VOL/MUTE 旋钮约 **4 秒**。ESP32 全程保持通电。
+
+              长按旋钮未出现闪灯或提示音，不能单凭这一点判断失败；以连接状态及实际输入切换为准。
+
+              **维护按钮会清除对应一侧的旧绑定**，正常控制时无需点击。Nordic 抓包板和电脑不参与日常中转。

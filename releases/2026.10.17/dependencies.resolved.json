@@ -1,0 +1,54 @@
+{
+  "dependencies": {
+    "esphome/libsodium": {
+      "dependencies": [],
+      "source": {
+        "path": "<resolved-by-pinned-esphome>",
+        "type": "local"
+      },
+      "version": "*"
+    },
+    "esphome/noise-c": {
+      "dependencies": [
+        {
+          "name": "esphome/libsodium",
+          "override_path": "<resolved-by-pinned-esphome>"
+        }
+      ],
+      "source": {
+        "path": "<resolved-by-pinned-esphome>",
+        "type": "local"
+      },
+      "version": "*"
+    },
+    "espressif/mdns": {
+      "component_hash": "3ba256ac95e07c274be53cbd73f06cb846c403b61e8fbdf1be57bdb79db7a63e",
+      "dependencies": [
+        {
+          "name": "idf",
+          "require": "private",
+          "version": ">=5.0"
+        }
+      ],
+      "source": {
+        "registry_url": "https://components.espressif.com/",
+        "type": "service"
+      },
+      "version": "1.12.0"
+    },
+    "idf": {
+      "source": {
+        "type": "idf"
+      },
+      "version": "5.5.5"
+    }
+  },
+  "direct_dependencies": [
+    "esphome/libsodium",
+    "esphome/noise-c",
+    "espressif/mdns"
+  ],
+  "manifest_hash": "fd40e0dbcd287af85272277995930f79737cad7206909a1302417b1db32a5410",
+  "target": "esp32c3",
+  "version": "2.0.0"
+}

@@ -1,0 +1,23 @@
+.venv/
+tools/
+captures/
+__pycache__/
+.venv-esphome/
+firmware/esphome/secrets.yaml
+firmware/esphome/.esphome/
+.venv*/
+**/__pycache__/
+*.pyc
+**/secrets.yaml
+**/.esphome/
+.build-release/
+.local/
+*.pcap
+*.pcapng
+*.elf
+*.map
+*.log
+# Only curated, credential-free firmware belongs in releases/.
+*.bin
+!releases/**/*.bin
+!evidence/hid-report-map.bin

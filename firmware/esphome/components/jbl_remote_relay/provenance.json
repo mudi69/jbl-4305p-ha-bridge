@@ -1,0 +1,64 @@
+{
+  "component": "jbl_remote_relay",
+  "origin": "New deployment-specific component; reuses native ESPHome BLEClientNode and Component APIs without copying or replacing the stack.",
+  "esphome_version": "2026.9.1",
+  "esp_idf_version": "5.5.5",
+  "files": {
+    "__init__.py": {
+      "local_sha256": "5a624614bd36200e2b2ddd77a15917110aefcc9fa53d0ee6387bc0ab5affb2c2"
+    },
+    "jbl_remote_relay.h": {
+      "local_sha256": "d6c747a0c67bc30a22199fcbd60485c652c73d8d9e7a71ea62d8a0350fc0e236"
+    },
+    "jbl_remote_relay.cpp": {
+      "local_sha256": "2677d865cc481f44a06d1e1266bded23717ff4607dde6359dbe0f487575832dc"
+    },
+    "received_keys.h": {
+      "local_sha256": "ce90f179ad838cddfcaa369385de72695395f7be3242988f0ceb65aa433990ea"
+    },
+    "verify_received_keys.py": {
+      "local_sha256": "b29880b42e33539a5557ea4e57b167811312fe60347aedfebbc9d9faa71637f8"
+    }
+  },
+  "protocol_evidence": "../../../..//jbl_protocol.json",
+  "behavior": [
+    "Pair/encrypt once after successful native OPEN unless peer security already started; gate setup on authenticated remote and successful service discovery.",
+    "Read actual 2908 values serially for every 2A4D under 1812; require unique input IDs 1/3/30 and CCCDs; subscribe serially and wait for write completions before releasing native cache.",
+    "Forward raw notification bytes by discovered handle, including releases/repeats; reject unexpected control-report lengths and unknown report mappings.",
+    "Existing speaker authenticated subscriber state gates output. No stale offline key queue. Physical reports cancel pending synthetic HA releases; disconnected remote releases held keys.",
+    "A 60-second setup timeout reports missing completion instead of hanging silently; native client owns reconnection.",
+    "Remote maintenance pairing: pause only native remote client, require actual close or initially idle, remove only verified remote bond, wait exact removal completion, then resume scanning; speaker bond/CCCD untouched.",
+    "Authenticated remote notification only: exact13captured key mapping to native event and Chinese last-key text; release and held-repeat observations suppressed; raw forwarding unchanged. HA synthetic keys never enter observer.",
+    "Native receive event types use Chinese labels; English protocol_key is retained solely for captured-payload identity. Independent HA send events and text record only send_key press outcomes, including all rejected requests; no receive or release reports enter HA send history.",
+    "A submitted HA press requires notify/emit to return stack acceptance. HA busy state is established before submit, rolled back on rejection, and the original 150 ms release is scheduled before publishing success. A release failure is logged without fabricating a second press event or adding retries."
+  ],
+  "review": [
+    "Independent source/API/cache/security/HA review completed. Fixed its reconnect-ready zero-release race by not overwriting physically held or active HA reports.",
+    "Added current-connection auth guard, native peer-initiated security guard, public/central role check and failed/disconnecting OPEN guard.",
+    "Remote-pair reset independently reviewed; actual CLOSE/failed OPEN evidence added so native forced-IDLE timeout cannot be mistaken for a completed disconnect.",
+    "Received-key observer reviewed; constexpr tests execute inside firmware C++ build and13mapping crosscheck matches jbl_protocol.json.",
+    "Independent review passed Chinese event lists, exact 13-code validation, source isolation, error rollback, accepted-before-history ordering and unchanged physical takeover/150 ms release behavior."
+  ],
+  "validation": [
+    "verify_provenance.py checks source integrity and Python syntax.",
+    "Parent performs one coordinated C++ build, isolated remote pairing/notifications, then simultaneous speaker/remote and sleep/restart/held-key tests.",
+    "2026-10-17: 13 captured mappings, 14 Chinese receive types, 27 HA send-result types and source acceptance/rejection wiring passed verify_received_keys.py; full YAML capture check and 21-label in-memory ESPHome code generation passed. C++ static_assert covers decoding/dedup and all pre-send gate decisions in the next parent build."
+  ],
+  "limitations": [
+    "Only the verified remote and speaker; no general HID mapping, output-report forwarding or additional devices.",
+    "Vendor report transport up to characteristic size is preserved, but large vendor packets and two-link MTU behavior have not been exercised. Observed button reports are 8 and 2 bytes.",
+    "50 percent passive scan duty may miss a short sleep/wake advertising window; first-key retention requires physical validation.",
+    "Submitted means at least one ESP-IDF notification call returned ESP_OK, not speaker execution or delivery acknowledgement. A later failed release is logged; no new release retry mechanism or offline event queue was added."
+  ],
+  "archive_parameterization": {
+    "date": "2026-10-17",
+    "configuration": "Speaker public MAC from required esp32_ble_server.speaker_mac; remote public MAC from linked native ble_client.mac_address. Use local secrets.yaml.",
+    "review": "Independent source review passed identity/role/authentication gates, generated-array wiring and original CCCD key compatibility. See release manifest for compile status and evidence/validation-summary.json for physical validation scope.",
+    "hardware_tested": false,
+    "notes": [
+      "No automatic address learning or relaxed peer filtering.",
+      "CCCD identity retains the v1 lowercase MAC-based key format; matching original address preserves its preferences.",
+      "Historical review entries describe intermediate development; consolidated validation evidence is authoritative."
+    ]
+  }
+}

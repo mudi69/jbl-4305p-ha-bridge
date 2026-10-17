@@ -1,0 +1,87 @@
+{
+  "upstream": "https://github.com/esphome/esphome",
+  "tag": "2026.9.1",
+  "commit": "0b2b16e664ecfc0add37f3435db1c2140b8a687e",
+  "component": "esphome/components/esp32_ble",
+  "files": {
+    "__init__.py": {
+      "upstream_git_blob": "7e97111686bfd840b2cb8d3621346c0e74a166c5",
+      "upstream_sha256": "0c8d7b15dc920d0b964fce37efcdd0f5a4a03640cee228fac7048aa47147356e",
+      "local_sha256": "dce16f6e67fd1abb9fbbc05976627de0bcdf8e49a33c12fbaf6413f085515c99"
+    },
+    "ble.cpp": {
+      "upstream_git_blob": "81fa328c1603c4cad783ba80372a905a4129b4d3",
+      "upstream_sha256": "f210006c13b752e65af8d785405644adb83dd015ec50676fdfc20b3fc7091092",
+      "local_sha256": "0d2507ac015cff5ea2109007bc4d9215779d43192e983bb21a5cb24ace8ac854"
+    },
+    "ble.h": {
+      "upstream_git_blob": "fd4fb15ff695051fbbe8712388f5a2628ff1c0b0",
+      "upstream_sha256": "78b0de2884b744795ce51db5472ebe52498a5767cd4fd4771c76207a8e6583be",
+      "local_sha256": "569d68d27f3a2163f6aee777515b518374113c6c7ea16e142342234faccd1c52"
+    },
+    "ble_advertising.cpp": {
+      "upstream_git_blob": "68704e49e2e8d463b05fbd97f860f7542748a3ca",
+      "upstream_sha256": "3ff9f4e6f0be83c2734646a8f872e5013063d273e7423898fdf69649a3cda4a9",
+      "local_sha256": "2def7190fe71cdcb9b958cb6b776c8e48e4012f661ba50937b9f31df01c0be69"
+    },
+    "ble_advertising.h": {
+      "upstream_git_blob": "6c8a97f453402d57f52835332382736b3964da7b",
+      "upstream_sha256": "69ac09eb65aba10b947230ae8cd0719fd95e6b26d8fdd99f79e1b57210f81a29",
+      "local_sha256": "c88e79f1368ec25101fab6a2bf67594360f337d120053393854c42c14d357f56"
+    },
+    "ble_event.h": {
+      "upstream_git_blob": "babfa937c7aa6c6fb83d794b518070731591f770",
+      "upstream_sha256": "32a56c5d107d04e77dedaab0374efe558a17fcbc61e23b289dda6b2dbe5e9709",
+      "local_sha256": "63d8e2c3ef68e65192820ae3b5fc65e6573a0da709cebf402ca1356832e8eaec"
+    },
+    "ble_scan_result.h": {
+      "upstream_git_blob": "980b39b0b2f840acf19bd89243f01eda6667f3d1",
+      "upstream_sha256": "fef51a183264b776a074d773ec30357687c91e8a0316fb636905553be6b75750",
+      "local_sha256": "fef51a183264b776a074d773ec30357687c91e8a0316fb636905553be6b75750"
+    },
+    "ble_uuid.h": {
+      "upstream_git_blob": "fd8da4baee7123458a6a74075fb65210791ca3f7",
+      "upstream_sha256": "3ab0a9672c322daeae04444c931c0c64a7dee0097975a1cf680e5f01416d3ce7",
+      "local_sha256": "3ab0a9672c322daeae04444c931c0c64a7dee0097975a1cf680e5f01416d3ce7"
+    }
+  },
+  "changes": [
+    "Before each services advertising start, reset to undirected/public and clear peer, then select ADV_TYPE_DIRECT_IND_LOW only if the saved bond list contains the captured speaker public address <configured speaker public MAC>. Reuse existing start/refresh/disconnect flow; no whitelist, raw callback, sleep or retry state machine.",
+    "Forward REMOVE_BOND_DEV_COMPLETE through the existing copied GAP event queue using the exact ESP-IDF event member; enables event-driven targeted re-pairing without new callbacks or timers."
+  ],
+  "verification": [
+    "All 8 installed source files independently matched official GitHub git-blob SHA1 at the fixed commit before copying.",
+    "ESP-IDF 5.5.5 bond address/type and advertising parameter fields checked against installed API headers.",
+    "Independent IDF source review confirms the advertising-start path replaces previous parameters, and normal advertising-data configuration does not reject directed advertising.",
+    "Full C++ incremental build and hardware reconnect validation are assigned to the parent task.",
+    "2026-10-17: targeted remove-bond API, event structure, automatic target disconnect and absent-bond failure semantics checked against installed ESP-IDF 5.5.5. Incremental C++ build and physical validation assigned to parent task.",
+    "Independent six-file review passed targeted removal API/struct, complete GAP event forwarding, both removal/disconnect orders, pending authentication gates, and target CCCD clearing. Flash-save failure remains explicitly logged; hardware validation pending."
+  ],
+  "license": {
+    "url": "https://raw.githubusercontent.com/esphome/esphome/0b2b16e664ecfc0add37f3435db1c2140b8a687e/LICENSE",
+    "sha256": "1f312390122725ee382f85af00e3df84f2490cd8fa61b9ea172bc6591cc0ac63"
+  },
+  "modified_files": [
+    "__init__.py",
+    "ble.cpp",
+    "ble.h",
+    "ble_advertising.cpp",
+    "ble_advertising.h",
+    "ble_event.h"
+  ],
+  "configuration_requirements": [
+    "Use only in this dedicated JBL bridge with one BLE server/client slot.",
+    "The speaker public address is deployment-specific evidence, not a cryptographic key. No bond keys are embedded or logged."
+  ],
+  "archive_parameterization": {
+    "date": "2026-10-17",
+    "configuration": "Speaker public MAC from required esp32_ble_server.speaker_mac; remote public MAC from linked native ble_client.mac_address. Use local secrets.yaml.",
+    "review": "Independent source review passed identity/role/authentication gates, generated-array wiring and original CCCD key compatibility. See release manifest for compile status and evidence/validation-summary.json for physical validation scope.",
+    "hardware_tested": false,
+    "notes": [
+      "No automatic address learning or relaxed peer filtering.",
+      "CCCD identity retains the v1 lowercase MAC-based key format; matching original address preserves its preferences.",
+      "Historical review entries describe intermediate development; consolidated validation evidence is authoritative."
+    ]
+  }
+}

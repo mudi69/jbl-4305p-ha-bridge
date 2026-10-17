@@ -1,0 +1,2 @@
+# Verified compiler frontend; framework version is also pinned in the YAML.
+esphome==2026.9.1

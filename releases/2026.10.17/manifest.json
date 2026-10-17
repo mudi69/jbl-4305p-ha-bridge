@@ -1,0 +1,108 @@
+{
+  "release": "2026.10.17",
+  "generated_at_utc": "2026-10-17T12:57:07.996606+00:00",
+  "profile": "PUBLIC EXAMPLE ONLY - recompile with private installation settings",
+  "esphome_version": "2026.9.1",
+  "esp_idf_version": "5.5.5",
+  "python_version": "3.13.14",
+  "board": "esp32-c3-devkitm-1",
+  "build": {
+    "config_hash": 2845422824,
+    "build_time": 1792241717,
+    "build_time_str": "2026-10-17 20:55:17 +0800",
+    "esphome_version": "2026.9.1"
+  },
+  "flash_settings": {
+    "flash_mode": "dio",
+    "flash_size": "4MB",
+    "flash_freq": "80m"
+  },
+  "factory_flash_offset": "0x0",
+  "application_flash_offset": "0x10000",
+  "source_config": "firmware/esphome/jbl-4305p-bridge.yaml",
+  "public_secrets": "build/public-example.secrets.yaml",
+  "rebuild": "python scripts/build_release.py --build-root <ASCII_BUILD_DIRECTORY>",
+  "configuration_note": "Only build_path is added to an isolated copy; all firmware/runtime inputs are listed below.",
+  "inputs_sha256": {
+    "build/public-example.secrets.yaml": "7357464753eb39e90ca529f8ddda5732684a3fa00887809d32c9efa640a0c913",
+    "firmware/esphome/components/esp32_ble/__init__.py": "dce16f6e67fd1abb9fbbc05976627de0bcdf8e49a33c12fbaf6413f085515c99",
+    "firmware/esphome/components/esp32_ble/ble.cpp": "0d2507ac015cff5ea2109007bc4d9215779d43192e983bb21a5cb24ace8ac854",
+    "firmware/esphome/components/esp32_ble/ble.h": "569d68d27f3a2163f6aee777515b518374113c6c7ea16e142342234faccd1c52",
+    "firmware/esphome/components/esp32_ble/ble_advertising.cpp": "2def7190fe71cdcb9b958cb6b776c8e48e4012f661ba50937b9f31df01c0be69",
+    "firmware/esphome/components/esp32_ble/ble_advertising.h": "c88e79f1368ec25101fab6a2bf67594360f337d120053393854c42c14d357f56",
+    "firmware/esphome/components/esp32_ble/ble_event.h": "63d8e2c3ef68e65192820ae3b5fc65e6573a0da709cebf402ca1356832e8eaec",
+    "firmware/esphome/components/esp32_ble/ble_scan_result.h": "fef51a183264b776a074d773ec30357687c91e8a0316fb636905553be6b75750",
+    "firmware/esphome/components/esp32_ble/ble_uuid.h": "3ab0a9672c322daeae04444c931c0c64a7dee0097975a1cf680e5f01416d3ce7",
+    "firmware/esphome/components/esp32_ble/LICENSE": "1f312390122725ee382f85af00e3df84f2490cd8fa61b9ea172bc6591cc0ac63",
+    "firmware/esphome/components/esp32_ble/provenance.json": "0a16142fbe9f1de222536c0411f54961675144bb1ebdbb6fa92e01f4b8fb1cbb",
+    "firmware/esphome/components/esp32_ble/verify_provenance.py": "385d0a5128b875a0305dc23bc14b8ec1387ff14fd620a4223997725a32155aae",
+    "firmware/esphome/components/esp32_ble_server/__init__.py": "1e36da901311ff995e1e557bb049dc330d056649168c4b2adead43e5287455fe",
+    "firmware/esphome/components/esp32_ble_server/ble_2902.cpp": "288575dd1397c1c5e0343c2e740d4b1e19b7b9c3af4776b34b61671df7d515b1",
+    "firmware/esphome/components/esp32_ble_server/ble_2902.h": "77b5657c029e77983837276c1d63a7af16b3539a65e53acd5232ae2a407abde3",
+    "firmware/esphome/components/esp32_ble_server/ble_characteristic.cpp": "a85aa1c7e93bcd3b90c6c9c84a6775c7d05a9296853e75f336f728fd6b23628f",
+    "firmware/esphome/components/esp32_ble_server/ble_characteristic.h": "b177f8d040bbe0bac99dd8eb100090a374d7888b52f444841b86af84be1553bd",
+    "firmware/esphome/components/esp32_ble_server/ble_descriptor.cpp": "019406616acb582191873e4af92aa732732dbf179bf957b0ac56fc0722b81d1c",
+    "firmware/esphome/components/esp32_ble_server/ble_descriptor.h": "84acc9d0d6614daaa2b86dc22cf3b6aa3f0923c28dea054f744b63d1e0538297",
+    "firmware/esphome/components/esp32_ble_server/ble_server.cpp": "cd9a4a8b770ab8a3b69d5a8e3a0caf7f65feab1e020ba997f8c7a48d480fce5b",
+    "firmware/esphome/components/esp32_ble_server/ble_server.h": "a87a83a13fab452d5ffa41ea1c20ea58ecf246dc39b4e426ee62b5b5228b63b8",
+    "firmware/esphome/components/esp32_ble_server/ble_server_automations.cpp": "86289b6a883f77aefc6d873de83dfd274fedb95d86e2cef7d64c2791b598dd9d",
+    "firmware/esphome/components/esp32_ble_server/ble_server_automations.h": "d75711ede05e552a87729d40193e882fe45dfbead4b338fa568840f47c6b5be5",
+    "firmware/esphome/components/esp32_ble_server/ble_service.cpp": "4053cbcb92c5414eacffeb9de645bd9ff23581b3b6bfb8b4f431fe8d5d0241db",
+    "firmware/esphome/components/esp32_ble_server/ble_service.h": "11b99aa2994eeef29b60d256877d939fa8a14ddc8dcab769fcc1d43c1133b58a",
+    "firmware/esphome/components/esp32_ble_server/LICENSE": "1f312390122725ee382f85af00e3df84f2490cd8fa61b9ea172bc6591cc0ac63",
+    "firmware/esphome/components/esp32_ble_server/provenance.json": "380a738d5eb132916f0300b5ac7e2ac1a57d68dbee23d91c066e7ffa4b63ba94",
+    "firmware/esphome/components/esp32_ble_server/verify_provenance.py": "385d0a5128b875a0305dc23bc14b8ec1387ff14fd620a4223997725a32155aae",
+    "firmware/esphome/components/jbl_entity_labels/__init__.py": "338dfde1a2acfc8b41c70b0b791edfc7144f5f8d4386b57d4dfbcf0c23a7e14a",
+    "firmware/esphome/components/jbl_entity_labels/check_codegen.py": "bec86b6dc9f8c450b87b4ca1e01ba85858ff5cab710d9b1cb0cc8b1756ba6292",
+    "firmware/esphome/components/jbl_remote_relay/__init__.py": "5a624614bd36200e2b2ddd77a15917110aefcc9fa53d0ee6387bc0ab5affb2c2",
+    "firmware/esphome/components/jbl_remote_relay/jbl_remote_relay.cpp": "2677d865cc481f44a06d1e1266bded23717ff4607dde6359dbe0f487575832dc",
+    "firmware/esphome/components/jbl_remote_relay/jbl_remote_relay.h": "d6c747a0c67bc30a22199fcbd60485c652c73d8d9e7a71ea62d8a0350fc0e236",
+    "firmware/esphome/components/jbl_remote_relay/provenance.json": "a98b6cf2de6c49eec02facc63fee14dc02344b2f57c401341615e94fd1e0287c",
+    "firmware/esphome/components/jbl_remote_relay/received_keys.h": "ce90f179ad838cddfcaa369385de72695395f7be3242988f0ceb65aa433990ea",
+    "firmware/esphome/components/jbl_remote_relay/verify_provenance.py": "96a1372bc8d606ba7a58c1936d79a7db1055d6a73c56222906cce4d8d5456aa8",
+    "firmware/esphome/components/jbl_remote_relay/verify_received_keys.py": "b29880b42e33539a5557ea4e57b167811312fe60347aedfebbc9d9faa71637f8",
+    "firmware/esphome/jbl-4305p-bridge.yaml": "66211cafb55416ff7bea48db5da588f769fc892e44162a15dd1b485b4d52b265",
+    "jbl_protocol.json": "4d1aee9f44ae9b9022ec5643e33be28af9ddf74d58dcf08daf140bf6f4747450",
+    "requirements-build.txt": "9d9d7b93a028b56a1ca4e642e3d2572de018f608b74b0bfcb84f35549aaf031e",
+    "scripts/build_release.py": "9bd2cc6809ef9bbf650b5c4f30170aa0f5180f6d4bda29ab6738b9687b2401de"
+  },
+  "artifacts": {
+    "firmware.factory.bin": {
+      "bytes": 1340528,
+      "sha256": "c278b9339d2d1c34498249b73809741fefa39b42194ec1e9de6032c5c32e0187"
+    },
+    "firmware.ota.bin": {
+      "bytes": 1274992,
+      "sha256": "c0bca7959e5dec899509440c950888b2e49d2cd1d67672dfd1f033529d1e02a8"
+    },
+    "partitions.csv": {
+      "bytes": 148,
+      "sha256": "865d64e0ed5e99453f450bfc6857320fedef34f06c76dabde3045922161d655f"
+    },
+    "public-example.secrets.yaml": {
+      "bytes": 335,
+      "sha256": "7357464753eb39e90ca529f8ddda5732684a3fa00887809d32c9efa640a0c913"
+    },
+    "sdkconfig.example": {
+      "bytes": 76199,
+      "sha256": "1df6084412a872941203ad8d2db8249c91dc186b5b1de1d553b827476cc220d6"
+    },
+    "dependencies.resolved.json": {
+      "bytes": 1292,
+      "sha256": "5e1a00c77dae323a3a10387e5382cfc3332ee2d6155c2f7fc138366eeae0ff2e"
+    }
+  },
+  "validation": {
+    "compiled": true,
+    "parameterized_firmware_hardware_tested": false,
+    "second_hardware_pair_tested": false,
+    "production_device_updated": false
+  },
+  "limits": [
+    "No runtime provisioning portal",
+    "Public example credentials must never be used in production",
+    "Do not OTA this demo onto an existing installation",
+    "Personalized firmware and full-flash/NVS backups must remain private",
+    "Rebuild process is reproducible; timestamps mean binary identity across builds is not promised"
+  ]
+}

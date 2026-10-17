@@ -1,0 +1,454 @@
+# JBL 4305P bridge: HA/original-remote coexistence and ESP32 reboot recovery verified.
+# All 13 payloads are capture-verified; speaker-tested: Optical/USB, volume, standby/wake.
+# After ESP32 reboot, the first original-remote press reconnected; the second executed.
+# 中文名称由 jbl_entity_labels 写入固件，保留现有 API 按键编号以供 HA 迁移名称。
+# 待机/唤醒、静音均为切换键；连接状态不代表音箱的电源、音量或当前输入。
+# “重新配对音箱”是维护操作，会删除 ESP32 保存的音箱绑定，日常控制无需点击。
+esphome:
+  name: jbl-4305p-bridge
+  friendly_name: JBL 4305P Bridge
+  min_version: 2026.9.1
+
+esp32:
+  board: esp32-c3-devkitm-1
+  flash_size: 4MB
+  framework:
+    type: esp-idf
+    version: "5.5.5"
+
+external_components:
+  - source:
+      type: local
+      path: components
+    components: [esp32_ble, esp32_ble_server, jbl_entity_labels, jbl_remote_relay]
+
+jbl_entity_labels:
+  entries:
+    - entity_id: jbl_ble_connected
+      name: 音箱蓝牙连接
+    - entity_id: jbl_remote_connected
+      name: 原装遥控器连接
+    - entity_id: jbl_remote_last_key
+      name: 最近收到原遥控按键
+    - entity_id: jbl_remote_key_received
+      name: 原遥控按键接收事件
+    - entity_id: jbl_ha_last_send
+      name: 最近 HA 按键发送
+    - entity_id: jbl_ha_key_sent
+      name: HA 按键发送事件
+    - entity_id: jbl_button_pair_speaker
+      name: 重新配对音箱（维护）
+    - entity_id: jbl_button_pair_remote
+      name: 重新配对原装遥控器（维护）
+    - entity_id: jbl_button_power
+      name: 待机／唤醒
+    - entity_id: jbl_button_volume_up
+      name: 音量增加
+    - entity_id: jbl_button_volume_down
+      name: 音量降低
+    - entity_id: jbl_button_mute
+      name: 静音／取消静音
+    - entity_id: jbl_button_previous
+      name: 上一首
+    - entity_id: jbl_button_play_pause
+      name: 播放／暂停
+    - entity_id: jbl_button_next
+      name: 下一首
+    - entity_id: jbl_button_streaming
+      name: 切换到网络播放
+    - entity_id: jbl_button_bluetooth
+      name: 切换到蓝牙输入
+    - entity_id: jbl_button_usb
+      name: 切换到 USB 输入
+    - entity_id: jbl_button_optical
+      name: 切换到光纤输入
+    - entity_id: jbl_button_balanced
+      name: 切换到平衡输入
+    - entity_id: jbl_button_aux
+      name: 切换到 AUX 辅助输入
+
+logger:
+  hardware_uart: USB_SERIAL_JTAG
+  level: DEBUG
+  initial_level: INFO
+  logs:
+    esp32_ble_server: DEBUG
+    esp32_ble_server.characteristic: DEBUG
+    button: DEBUG
+    script: DEBUG
+
+api:
+  encryption:
+    key: !secret jbl4305p_api_key
+  reboot_timeout: 0s
+
+ota:
+  - platform: esphome
+    password: !secret jbl4305p_ota_password
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  reboot_timeout: 0s
+
+esp32_ble:
+  name: JBL 4305P REMOTE
+  io_capability: none
+  auth_req_mode: bond
+  max_connections: 2
+
+# 同时作为音箱的遥控器、原装遥控器的接收端。
+esp32_ble_tracker:
+  scan_parameters:
+    active: false
+    interval: 160ms
+    window: 80ms
+
+ble_client:
+  - id: jbl_original_remote
+    mac_address: !secret jbl4305p_remote_mac
+    auto_connect: true
+
+jbl_remote_relay:
+  id: jbl_relay
+  ble_client_id: jbl_original_remote
+  keyboard_input_id: jbl_keyboard_input
+  consumer_input_id: jbl_consumer_input
+  vendor_input_id: jbl_vendor_input
+  received_event_id: jbl_remote_key_received
+  last_key_text_sensor_id: jbl_remote_last_key
+  sent_event_id: jbl_ha_key_sent
+  last_send_text_sensor_id: jbl_ha_last_send
+
+text_sensor:
+  - platform: template
+    id: jbl_remote_last_key
+    name: Remote Last Key
+    icon: mdi:remote
+    update_interval: never
+  - platform: template
+    id: jbl_ha_last_send
+    name: HA Last Send
+    icon: mdi:send
+    update_interval: never
+
+event:
+  - platform: template
+    id: jbl_remote_key_received
+    name: Remote Key Received
+    icon: mdi:gesture-tap-button
+    event_types:
+      - 待机／唤醒
+      - 音量增加
+      - 音量降低
+      - 静音／取消静音
+      - 上一首
+      - 播放／暂停
+      - 下一首
+      - 网络播放
+      - 蓝牙输入
+      - USB 输入
+      - 光纤输入
+      - 平衡输入
+      - AUX 辅助输入
+      - 收到未识别报告
+  - platform: template
+    id: jbl_ha_key_sent
+    name: HA Key Sent
+    icon: mdi:send-check
+    event_types:
+      - 待机／唤醒（已提交）
+      - 待机／唤醒（未发送）
+      - 音量增加（已提交）
+      - 音量增加（未发送）
+      - 音量降低（已提交）
+      - 音量降低（未发送）
+      - 静音／取消静音（已提交）
+      - 静音／取消静音（未发送）
+      - 上一首（已提交）
+      - 上一首（未发送）
+      - 播放／暂停（已提交）
+      - 播放／暂停（未发送）
+      - 下一首（已提交）
+      - 下一首（未发送）
+      - 网络播放（已提交）
+      - 网络播放（未发送）
+      - 蓝牙输入（已提交）
+      - 蓝牙输入（未发送）
+      - USB 输入（已提交）
+      - USB 输入（未发送）
+      - 光纤输入（已提交）
+      - 光纤输入（未发送）
+      - 平衡输入（已提交）
+      - 平衡输入（未发送）
+      - AUX 辅助输入（已提交）
+      - AUX 辅助输入（未发送）
+      - 未知命令（未发送）
+
+esp32_ble_server:
+  id: jbl_ble_server
+  speaker_mac: !secret jbl4305p_speaker_mac
+  appearance: 0x0180
+  max_clients: 1
+  services:
+    - uuid: "1812"
+      advertise: true
+      characteristics:
+        - uuid: "2A4A"
+          read: true
+          value: [0x00, 0x00, 0x00, 0x01]
+        - uuid: "2A4C"
+          write_no_response: true
+        - uuid: "2A4E"
+          read: true
+          write_no_response: true
+          value: [0x01]
+        - id: jbl_report_map
+          uuid: "2A4B"
+          read: true
+          value: [
+            0x05, 0x01, 0x09, 0x06, 0xA1, 0x01, 0x05, 0x07, 0x09, 0x06, 0xA1, 0x01, 0x85, 0x01, 0x95, 0x08,
+            0x75, 0x08, 0x15, 0x00, 0x25, 0xFF, 0x19, 0x00, 0x29, 0xFF, 0x81, 0x00, 0xC0, 0x06, 0x00, 0xFF,
+            0x09, 0x00, 0xA1, 0x01, 0x85, 0x1E, 0x95, 0xFF, 0x75, 0x08, 0x15, 0x00, 0x25, 0xFF, 0x19, 0x00,
+            0x29, 0xFF, 0x81, 0x00, 0xC0, 0x05, 0x0C, 0x09, 0x01, 0xA1, 0x01, 0x85, 0x03, 0x19, 0x00, 0x2A,
+            0x9C, 0x02, 0x15, 0x00, 0x26, 0x9C, 0x02, 0x95, 0x02, 0x75, 0x10, 0x81, 0x00, 0xC0, 0xC0
+          ]
+        - id: jbl_keyboard_input
+          uuid: "2A4D"
+          read: true
+          write: true
+          notify: true
+          value: [0, 0, 0, 0, 0, 0, 0, 0]
+          descriptors:
+            - uuid: "2902"
+              read: true
+              write: true
+              value: [0x00, 0x00]
+            - uuid: "2908"
+              read: true
+              write: false
+              value: [0x01, 0x01]
+        - id: jbl_keyboard_output
+          uuid: "2A4D"
+          read: true
+          write: true
+          write_no_response: true
+          value: [0x00]
+          descriptors:
+            - uuid: "2908"
+              read: true
+              write: false
+              value: [0x01, 0x02]
+        - id: jbl_vendor_input
+          uuid: "2A4D"
+          read: true
+          write: true
+          notify: true
+          value: !lambda return std::vector<uint8_t>(255, 0);
+          descriptors:
+            - uuid: "2902"
+              read: true
+              write: true
+              value: [0x00, 0x00]
+            - uuid: "2908"
+              read: true
+              write: false
+              value: [0x1E, 0x01]
+        - id: jbl_vendor_output
+          uuid: "2A4D"
+          read: true
+          write: true
+          write_no_response: true
+          descriptors:
+            - uuid: "2908"
+              read: true
+              write: false
+              value: [0x1E, 0x02]
+        - id: jbl_consumer_input
+          uuid: "2A4D"
+          read: true
+          write: true
+          notify: true
+          # Captured reports are 2 bytes despite the Report Map declaring 4.
+          value: [0x00, 0x00]
+          descriptors:
+            - uuid: "2902"
+              read: true
+              write: true
+              value: [0x00, 0x00]
+            - uuid: "2908"
+              read: true
+              write: false
+              value: [0x03, 0x01]
+    - uuid: "180F"
+      characteristics:
+        - id: jbl_battery_level
+          uuid: "2A19"
+          read: true
+          # Fixed level for this USB-powered bridge, not the remote's battery.
+          value: [100]
+    - uuid: "180A"
+      characteristics:
+        - uuid: "2A29"
+          read: true
+          value: Realtek BT
+        - uuid: "2A24"
+          read: true
+          value: HBG BLE RC
+        - uuid: "2A25"
+          read: true
+          value: "20210908"
+        - uuid: "2A27"
+          read: true
+          value: V1.0.0
+        - uuid: "2A26"
+          read: true
+          value: V1.0.0
+        - uuid: "2A28"
+          read: true
+          value: V1.0.0
+        - uuid: "2A50"
+          read: true
+          value: [0x01, 0x5A, 0x1D, 0x81, 0xC0, 0x03, 0x00]
+
+binary_sensor:
+  - platform: template
+    id: jbl_ble_connected
+    name: BLE Connected
+    device_class: connectivity
+    lambda: return id(jbl_ble_server).get_connected_client_count() > 0;
+  - platform: template
+    id: jbl_remote_connected
+    name: Remote Connected
+    device_class: connectivity
+    lambda: return id(jbl_relay).is_remote_ready();
+
+script:
+  - id: jbl_send_key
+    mode: queued
+    max_runs: 10
+    parameters:
+      report_id: int
+      payload: uint8_t[]
+    then:
+      - lambda: id(jbl_relay).send_key(report_id, payload);
+      # 释放由 relay 在 150ms 后发送；留出间隔再处理下一条 HA 指令。
+      - delay: 160ms
+
+button:
+  - platform: template
+    id: jbl_button_pair_speaker
+    name: Pair Speaker
+    entity_category: config
+    on_press:
+      - lambda: id(jbl_ble_server).start_speaker_pairing();
+  - platform: template
+    id: jbl_button_pair_remote
+    name: Pair Remote
+    entity_category: config
+    on_press:
+      - lambda: id(jbl_relay).start_remote_pairing();
+  - platform: template
+    id: jbl_button_power
+    name: Power
+    on_press:
+      - script.execute:
+          id: jbl_send_key
+          report_id: 1
+          payload: [0x00, 0x00, 0x66, 0x00, 0x00, 0x00, 0x00, 0x00]
+  - platform: template
+    id: jbl_button_volume_up
+    name: Volume Up
+    on_press:
+      - script.execute:
+          id: jbl_send_key
+          report_id: 1
+          payload: [0x00, 0x00, 0x52, 0x00, 0x00, 0x00, 0x00, 0x00]
+  - platform: template
+    id: jbl_button_volume_down
+    name: Volume Down
+    on_press:
+      - script.execute:
+          id: jbl_send_key
+          report_id: 1
+          payload: [0x00, 0x00, 0x51, 0x00, 0x00, 0x00, 0x00, 0x00]
+  - platform: template
+    id: jbl_button_mute
+    name: Mute
+    on_press:
+      - script.execute:
+          id: jbl_send_key
+          report_id: 1
+          payload: [0x00, 0x00, 0x82, 0x00, 0x00, 0x00, 0x00, 0x00]
+  - platform: template
+    id: jbl_button_previous
+    name: Previous
+    on_press:
+      - script.execute:
+          id: jbl_send_key
+          report_id: 1
+          payload: [0x00, 0x00, 0x50, 0x00, 0x00, 0x00, 0x00, 0x00]
+  - platform: template
+    id: jbl_button_play_pause
+    name: Play Pause
+    on_press:
+      - script.execute:
+          id: jbl_send_key
+          report_id: 1
+          payload: [0x00, 0x00, 0x58, 0x00, 0x00, 0x00, 0x00, 0x00]
+  - platform: template
+    id: jbl_button_next
+    name: Next
+    on_press:
+      - script.execute:
+          id: jbl_send_key
+          report_id: 1
+          payload: [0x00, 0x00, 0x4F, 0x00, 0x00, 0x00, 0x00, 0x00]
+  - platform: template
+    id: jbl_button_streaming
+    name: Streaming
+    on_press:
+      - script.execute:
+          id: jbl_send_key
+          report_id: 3
+          payload: [0xEA, 0x00]
+  - platform: template
+    id: jbl_button_bluetooth
+    name: Bluetooth
+    on_press:
+      - script.execute:
+          id: jbl_send_key
+          report_id: 1
+          payload: [0x00, 0x00, 0x75, 0x00, 0x00, 0x00, 0x00, 0x00]
+  - platform: template
+    id: jbl_button_usb
+    name: USB
+    on_press:
+      - script.execute:
+          id: jbl_send_key
+          report_id: 3
+          payload: [0xE9, 0x00]
+  - platform: template
+    id: jbl_button_optical
+    name: Optical
+    on_press:
+      - script.execute:
+          id: jbl_send_key
+          report_id: 1
+          payload: [0x00, 0x00, 0x29, 0x00, 0x00, 0x00, 0x00, 0x00]
+  - platform: template
+    id: jbl_button_balanced
+    name: Balanced
+    on_press:
+      - script.execute:
+          id: jbl_send_key
+          report_id: 3
+          payload: [0x23, 0x02]
+  - platform: template
+    id: jbl_button_aux
+    name: Aux
+    on_press:
+      - script.execute:
+          id: jbl_send_key
+          report_id: 1
+          payload: [0x00, 0x00, 0x76, 0x00, 0x00, 0x00, 0x00, 0x00]
